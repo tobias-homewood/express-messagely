@@ -24,15 +24,15 @@ class User {
               first_name,
               last_name,
               phone,
-              join_at)
-            VALUES ($1, $2, $3, $4, $5, current_timestamp)
+              join_at, last_login_at)
+            VALUES ($1, $2, $3, $4, $5, current_timestamp, current_timestamp)
             RETURNING username, password, first_name, last_name, phone`,
         [username, hashedPassword, first_name, last_name, phone]);
+        return result.rows[0];
+
       } catch (err) {
         throw new ExpressError(err.detail, 400);
       }
-
-    return result.rows[0];
   }
 
   /** Authenticate: is this username/password valid? Returns boolean. */
